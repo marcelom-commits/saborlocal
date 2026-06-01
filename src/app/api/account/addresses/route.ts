@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     const profile = await prisma.customerProfile.upsert({
       where: { userId: user.id },
       update: {},
-      create: { userId: user.id },
+      create: { userId: user.id as string },
     });
 
     const data = await request.json();
