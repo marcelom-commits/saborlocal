@@ -19,7 +19,7 @@ export default function AdminLayout({
     );
   }
 
-  if (!session || session.user.role !== "ADMIN") {
+  if (!session?.user || (session.user as any).role !== "ADMIN") {
     redirect("/login");
   }
 
