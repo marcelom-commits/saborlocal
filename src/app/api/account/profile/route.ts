@@ -15,7 +15,7 @@ export async function PUT(request: Request) {
     await prisma.customerProfile.upsert({
       where: { userId: user.id },
       update: { phone },
-      create: { userId: user.id, phone },
+      create: { userId: user.id as string, phone },
     });
     return NextResponse.json({ success: true });
   } catch {
