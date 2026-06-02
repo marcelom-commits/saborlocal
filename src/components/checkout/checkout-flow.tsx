@@ -145,12 +145,43 @@ export function CheckoutFlow({ items, subtotal, addresses, userId, customerProfi
               </div>
             ) : (
               <div className="grid grid-cols-2 gap-3">
-                {Object.entries(addressForm).map(([key, val]) => (
-                  <div key={key} className={key === "complement" ? "" : (key === "recipientName" || key === "street" ? "col-span-2" : "")}>
-                    <label className="block text-xs font-medium text-stone-700 mb-1 capitalize">{key === "recipientName" ? "Nome do recebedor" : key}</label>
-                    <input value={val} onChange={(e) => setAddressForm({ ...addressForm, [key]: e.target.value })} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" />
-                  </div>
-                ))}
+                <div className="col-span-2">
+                  <label className="block text-xs font-medium text-stone-700 mb-1">Nome do recebedor</label>
+                  <input value={addressForm.recipientName} onChange={(e) => setAddressForm({ ...addressForm, recipientName: e.target.value })} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" required />
+                </div>
+                <div className="col-span-2">
+                  <label className="block text-xs font-medium text-stone-700 mb-1">Rua</label>
+                  <input value={addressForm.street} onChange={(e) => setAddressForm({ ...addressForm, street: e.target.value })} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" required />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-stone-700 mb-1">Número</label>
+                  <input value={addressForm.number} onChange={(e) => setAddressForm({ ...addressForm, number: e.target.value })} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" required />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-stone-700 mb-1">Complemento</label>
+                  <input value={addressForm.complement} onChange={(e) => setAddressForm({ ...addressForm, complement: e.target.value })} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-stone-700 mb-1">Bairro</label>
+                  <input value={addressForm.district} onChange={(e) => setAddressForm({ ...addressForm, district: e.target.value })} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" required />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-stone-700 mb-1">Cidade</label>
+                  <input value={addressForm.city} onChange={(e) => setAddressForm({ ...addressForm, city: e.target.value })} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" required />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-stone-700 mb-1">Estado</label>
+                  <select value={addressForm.state} onChange={(e) => setAddressForm({ ...addressForm, state: e.target.value })} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" required>
+                    <option value="">Selecione</option>
+                    {["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB","PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"].map((uf) => (
+                      <option key={uf} value={uf}>{uf}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-stone-700 mb-1">CEP</label>
+                  <input value={addressForm.zipCode} onChange={(e) => setAddressForm({ ...addressForm, zipCode: e.target.value.replace(/\D/g, "").slice(0, 8) })} placeholder="00000000" maxLength={8} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" required />
+                </div>
               </div>
             )}
             <button onClick={() => setStep(2)} className="mt-4 bg-amber-700 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-amber-800">
