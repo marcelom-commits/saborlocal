@@ -2,13 +2,13 @@ import { cookies } from "next/headers";
 import { prisma } from "./prisma";
 import crypto from "crypto";
 
-function getCartToken(): string | undefined {
-  const cookieStore = cookies();
+async function getCartToken(): Promise<string | undefined> {
+  const cookieStore = await cookies();
   return cookieStore.get("cart_token")?.value;
 }
 
-function setCartToken(token: string) {
-  const cookieStore = cookies();
+async function setCartToken(token: string) {
+  const cookieStore = await cookies();
   cookieStore.set("cart_token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
@@ -19,7 +19,7 @@ function setCartToken(token: string) {
 }
 
 export async function getOrCreateCart(userId?: string) {
-  let token = getCartToken();
+  let token = await getCartToken();
   let cart = null;
 
   if (token) {
@@ -66,7 +66,7 @@ export async function addToCart(productId: string, quantity: number, unitPrice: 
 }
 
 export async function getCartByToken() {
-  const token = getCartToken();
+  const token = await getCartToken();
   if (!token) return null;
   return prisma.cart.findUnique({
     where: { cartToken: token },

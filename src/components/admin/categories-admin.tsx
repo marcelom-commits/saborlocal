@@ -100,8 +100,13 @@ function CategoryForm({
     e.preventDefault();
     setSaving(true);
     const form = new FormData(e.currentTarget);
-    const data = Object.fromEntries(form);
-    data.isActive = data.isActive === "on";
+    const raw = Object.fromEntries(form);
+    const data = {
+      name: String(raw.name ?? ""),
+      description: String(raw.description ?? ""),
+      sortOrder: Number(raw.sortOrder) || 0,
+      isActive: raw.isActive === "on",
+    };
 
     if (category) {
       await fetch(`/api/admin/categories/${category.id}`, {

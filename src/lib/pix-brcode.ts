@@ -1,10 +1,10 @@
-import QRCodePix from "qrcode-pix";
+import { QrCodePix } from "qrcode-pix";
 
 export async function buildPixBRCode(params: { key: string; amount: number; receiver: string; description?: string }) {
-  const pix = QRCodePix({
+  const pix = QrCodePix({
     version: "01",
     key: params.key,
-    amount: params.amount,
+    value: params.amount,
     name: params.receiver,
     city: "Brasilia",
     transactionId: "SABORLOCAL",
